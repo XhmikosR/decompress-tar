@@ -1,4 +1,4 @@
-# decompress-tar [![CI](https://github.com/kevva/decompress-tar/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/kevva/decompress-tar/actions/workflows/ci.yml)
+# decompress-tar [![CI](https://github.com/XhmikosR/decompress-tar/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/XhmikosR/decompress-tar/actions/workflows/ci.yml)
 
 > tar decompress plugin
 
@@ -6,15 +6,15 @@
 ## Install
 
 ```sh
-npm install decompress-tar
+npm install @xhmikosr/decompress-tar
 ```
 
 
 ## Usage
 
 ```js
-import decompress from 'decompress';
-import decompressTar from 'decompress-tar';
+import decompress from '@xhmikosr/decompress';
+import decompressTar from '@xhmikosr/decompress-tar';
 
 decompress('unicorn.tar', 'dist', {
 	plugins: [

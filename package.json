@@ -1,9 +1,12 @@
 {
-	"name": "decompress-tar",
+	"name": "@xhmikosr/decompress-tar",
 	"version": "4.1.1",
 	"description": "decompress tar plugin",
 	"license": "MIT",
-	"repository": "kevva/decompress-tar",
+	"repository": "XhmikosR/decompress-tar",
+	"publishConfig": {
+		"access": "public"
+	},
 	"author": {
 		"name": "Kevin Mårtensson",
 		"email": "kevinmartensson@gmail.com",
