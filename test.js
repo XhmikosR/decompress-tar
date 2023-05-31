@@ -1,11 +1,12 @@
-import fs from 'fs';
-import path from 'path';
+import fs, {promises as fsP} from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import isJpg from 'is-jpg';
-import pify from 'pify';
 import test from 'ava';
-import m from '.';
+import m from './index.js';
 
-const fsP = pify(fs);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test('extract file', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixtures', 'file.tar'));
@@ -42,5 +43,5 @@ test('return empty array if non-valid file is supplied', async t => {
 });
 
 test('throw on wrong input', async t => {
-	await t.throws(m()('foo'), 'Expected a Buffer or Stream, got string');
+	await t.throwsAsync(m()('foo'), undefined, 'Expected a Buffer or Stream, got string');
 });

@@ -1,9 +1,10 @@
-'use strict';
-const fileType = require('file-type');
-const isStream = require('is-stream');
-const tarStream = require('tar-stream');
+import {Buffer} from 'node:buffer';
+import fileType from 'file-type';
+import {isStream} from 'is-stream';
+import tarStream from 'tar-stream';
 
-module.exports = () => input => {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default () => input => {
 	if (!Buffer.isBuffer(input) && !isStream(input)) {
 		return Promise.reject(new TypeError(`Expected a Buffer or Stream, got ${typeof input}`));
 	}
@@ -25,7 +26,7 @@ module.exports = () => input => {
 				mode: header.mode,
 				mtime: header.mtime,
 				path: header.name,
-				type: header.type
+				type: header.type,
 			};
 
 			if (header.type === 'symlink' || header.type === 'link') {
@@ -46,6 +47,7 @@ module.exports = () => input => {
 		extract.on('error', reject);
 	});
 
+	// eslint-disable-next-line unicorn/no-thenable
 	extract.then = promise.then.bind(promise);
 	extract.catch = promise.catch.bind(promise);
 

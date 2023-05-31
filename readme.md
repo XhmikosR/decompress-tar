@@ -1,20 +1,20 @@
-# decompress-tar [![Build Status](https://travis-ci.org/kevva/decompress-tar.svg?branch=master)](https://travis-ci.org/kevva/decompress-tar)
+# decompress-tar [![CI](https://github.com/kevva/decompress-tar/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/kevva/decompress-tar/actions/workflows/ci.yml)
 
 > tar decompress plugin
 
 
 ## Install
 
-```
-$ npm install decompress-tar
+```sh
+npm install decompress-tar
 ```
 
 
 ## Usage
 
 ```js
-const decompress = require('decompress');
-const decompressTar = require('decompress-tar');
+import decompress from 'decompress';
+import decompressTar from 'decompress-tar';
 
 decompress('unicorn.tar', 'dist', {
 	plugins: [
