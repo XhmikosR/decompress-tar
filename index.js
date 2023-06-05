@@ -1,16 +1,19 @@
 import {Buffer} from 'node:buffer';
-import fileType from 'file-type';
+import {fileTypeFromBuffer} from 'file-type';
 import {isStream} from 'is-stream';
 import tarStream from 'tar-stream';
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default () => input => {
+const decompressTar = () => async input => {
 	if (!Buffer.isBuffer(input) && !isStream(input)) {
-		return Promise.reject(new TypeError(`Expected a Buffer or Stream, got ${typeof input}`));
+		throw new TypeError(`Expected a Buffer or Stream, got ${typeof input}`);
 	}
 
-	if (Buffer.isBuffer(input) && (!fileType(input) || fileType(input).ext !== 'tar')) {
-		return Promise.resolve([]);
+	if (Buffer.isBuffer(input)) {
+		const type = await fileTypeFromBuffer(input);
+
+		if (!type || type.ext !== 'tar') {
+			return [];
+		}
 	}
 
 	const extract = tarStream.extract();
@@ -59,3 +62,5 @@ export default () => input => {
 
 	return extract;
 };
+
+export default decompressTar;
