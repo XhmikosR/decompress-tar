@@ -3,7 +3,10 @@
 	"version": "7.0.0",
 	"description": "decompress tar plugin",
 	"license": "MIT",
-	"repository": "XhmikosR/decompress-tar",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/XhmikosR/decompress-tar.git"
+	},
 	"publishConfig": {
 		"access": "public"
 	},
