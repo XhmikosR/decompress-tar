@@ -1,6 +1,6 @@
 import {Buffer} from 'node:buffer';
 import {fileTypeFromBuffer} from 'file-type';
-import isStream from 'is-stream';
+import {isStream} from 'is-stream';
 import tarStream from 'tar-stream';
 
 const decompressTar = () => async input => {
