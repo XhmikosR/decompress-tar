@@ -1,4 +1,4 @@
-# decompress-tar [![CI](https://github.com/XhmikosR/decompress-tar/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/XhmikosR/decompress-tar/actions/workflows/ci.yml)
+# decompress-tar [![npm version](https://img.shields.io/npm/v/@xhmikosr/decompress-tar?logo=npm&logoColor=fff)](https://www.npmjs.com/package/@xhmikosr/decompress-tar) [![CI Status](https://img.shields.io/github/actions/workflow/status/XhmikosR/decompress-tar/ci.yml?branch=master&label=CI&logo=github)](https://github.com/XhmikosR/decompress-tar/actions/workflows/ci.yml?query=branch%3Amaster)
 
 > tar decompress plugin
 
