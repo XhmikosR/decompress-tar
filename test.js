@@ -3,14 +3,14 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import isJpg from 'is-jpg';
 import test from 'ava';
-import m from './index.js';
+import decompressTar from './index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 test('extract file', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixtures', 'file.tar'));
-	const files = await m()(buf);
+	const files = await decompressTar()(buf);
 
 	t.is(files[0].path, 'test.jpg');
 	t.true(isJpg(files[0].data));
@@ -18,7 +18,7 @@ test('extract file', async t => {
 
 test('extract file using streams', async t => {
 	const stream = fs.createReadStream(path.join(__dirname, 'fixtures', 'file.tar'));
-	const files = await m()(stream);
+	const files = await decompressTar()(stream);
 
 	t.is(files[0].path, 'test.jpg');
 	t.true(isJpg(files[0].data));
@@ -26,7 +26,7 @@ test('extract file using streams', async t => {
 
 test('extract symlinks', async t => {
 	const buf = await fsP.readFile(path.join(__dirname, 'fixtures', 'symlink.tar'));
-	const files = await m()(buf);
+	const files = await decompressTar()(buf);
 
 	t.is(files[0].path, 'test-symlink/symlink');
 	t.is(files[0].type, 'symlink');
@@ -37,11 +37,11 @@ test('extract symlinks', async t => {
 
 test('return empty array if non-valid file is supplied', async t => {
 	const buf = await fsP.readFile(__filename);
-	const files = await m()(buf);
+	const files = await decompressTar()(buf);
 
 	t.is(files.length, 0);
 });
 
 test('throw on wrong input', async t => {
-	await t.throwsAsync(m()('foo'), undefined, 'Expected a Buffer or Stream, got string');
+	await t.throwsAsync(decompressTar()('foo'), undefined, 'Expected a Buffer or Stream, got string');
 });
