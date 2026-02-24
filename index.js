@@ -1,6 +1,6 @@
 import {Buffer} from 'node:buffer';
 import {fileTypeFromBuffer} from 'file-type';
-import isStream from 'is-stream';
+import {isStream} from 'is-stream';
 import tarStream from 'tar-stream';
 
 const decompressTar = () => async input => {
@@ -11,7 +11,7 @@ const decompressTar = () => async input => {
 	if (Buffer.isBuffer(input)) {
 		const type = await fileTypeFromBuffer(input);
 
-		if (!type || type.ext !== 'tar') {
+		if (!type || type.mime !== 'application/x-tar') {
 			return [];
 		}
 	}
