@@ -23,7 +23,8 @@
 		"lint": "xo",
 		"xo": "xo",
 		"fix": "xo --fix",
-		"test": "npm run ava"
+		"test": "npm run xo && npm run ava",
+		"test-ci": "c8 ava"
 	},
 	"main": "index.js",
 	"type": "module",
@@ -46,7 +47,7 @@
 	},
 	"devDependencies": {
 		"ava": "^6.4.1",
-		"is-jpg": "^3.0.0",
+		"c8": "^11.0.0",
 		"xo": "^1.2.3"
 	},
 	"xo": {
