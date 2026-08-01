@@ -19,32 +19,41 @@ const decompressTar = () => async input => {
 	const extract = tarStream.extract();
 	const files = [];
 
-	extract.on('entry', (header, stream, cb) => {
-		const chunk = [];
-
-		stream.on('data', data => chunk.push(data));
-		stream.on('end', () => {
-			const file = {
-				data: Buffer.concat(chunk),
-				mode: header.mode,
-				mtime: header.mtime,
-				path: header.name,
-				type: header.type,
-			};
-
-			if (header.type === 'symlink' || header.type === 'link') {
-				file.linkname = header.linkname;
-			}
-
-			files.push(file);
-			cb();
-		});
-	});
-
 	const promise = new Promise((resolve, reject) => {
 		if (!Buffer.isBuffer(input)) {
 			input.on('error', reject);
 		}
+
+		extract.on('entry', (header, stream, cb) => {
+			// A directory entry has no body; a nonzero size never emits 'end' and hangs the parse
+			if (header.type === 'directory' && header.size > 0) {
+				stream.resume();
+				reject(new Error('Refusing to extract a directory entry with a non-zero size'));
+				return;
+			}
+
+			const chunk = [];
+
+			// tar-stream destroys the entry stream on malformed input; without this it throws uncaught
+			stream.on('error', reject);
+			stream.on('data', data => chunk.push(data));
+			stream.on('end', () => {
+				const file = {
+					data: Buffer.concat(chunk),
+					mode: header.mode,
+					mtime: header.mtime,
+					path: header.name,
+					type: header.type,
+				};
+
+				if (header.type === 'symlink' || header.type === 'link') {
+					file.linkname = header.linkname;
+				}
+
+				files.push(file);
+				cb();
+			});
+		});
 
 		extract.on('finish', () => resolve(files));
 		extract.on('error', reject);
