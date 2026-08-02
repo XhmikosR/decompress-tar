@@ -1,6 +1,6 @@
 {
 	"name": "@xhmikosr/decompress-tar",
-	"version": "9.0.1",
+	"version": "9.0.2",
 	"description": "decompress tar plugin",
 	"license": "MIT",
 	"repository": {
